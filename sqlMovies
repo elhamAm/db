@@ -1,0 +1,222 @@
+
+DROP TABLE FILM;
+DROP TABLE COMPANY;
+DROP TABLE MAIN_ACTOR;
+DROP TABLE DIRECTOR;
+
+
+
+DROP SEQUENCE company_sq;
+DROP SEQUENCE mainActor_sq;
+DROP SEQUENCE director_sq;
+DROP SEQUENCE film_sq;
+
+
+CREATE SEQUENCE  company_sq
+    MINVALUE 1
+    MAXVALUE 15
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20;
+
+CREATE SEQUENCE  mainActor_sq
+    MINVALUE 1
+    MAXVALUE 15
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20;
+    
+CREATE SEQUENCE  director_sq
+    MINVALUE 1
+    MAXVALUE 15
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20;
+    
+CREATE SEQUENCE  film_sq
+    MINVALUE 1
+    MAXVALUE 15
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20;
+
+CREATE TABLE COMPANY 
+(
+Company_ID NUMBER(4),
+Company_Name  VARCHAR2(25) NOT NULL,
+Company_Country VARCHAR2(20) NOT NULL,
+CONSTRAINT Company_pk PRIMARY KEY (Company_ID)
+);
+
+CREATE TABLE MAIN_ACTOR
+(
+Main_Actor_ID NUMBER(4),
+First_Name VARCHAR2(20) NOT NULL,
+Last_Name VARCHAR2(20) NOT NULL,
+Birthday Date NOT NULL,
+Country VARCHAR2(20),
+CONSTRAINT mainActor_pk PRIMARY KEY (Main_Actor_ID)
+);
+
+CREATE TABLE DIRECTOR
+(
+Director_ID NUMBER(4),
+Director_First_Name VARCHAR2(20),
+Director_Last_Name VARCHAR2(20) NOT NULL,
+Director_BD Date,
+Country VARCHAR2(20) NOT NULL,
+CONSTRAINT Director_pk PRIMARY KEY (Director_ID)
+);
+
+
+CREATE TABLE FILM
+(
+Film_ID NUMBER(4),
+Title VARCHAR(35) NOT NULL,
+Year NUMBER(4) NOT NULL,
+Language VARCHAR2(20),
+Director_ID NUMBER(4),
+Actor_ID NUMBER(4) NOT NULL,
+Company_ID NUMBER(4) NOT NULL,
+Genre VARCHAR2(10) NOT NULL,/* changé à varchar2*/
+CONSTRAINT FILM_pk PRIMARY KEY (Film_ID),
+CONSTRAINT fk_director FOREIGN KEY (Director_ID) REFERENCES DIRECTOR(Director_ID),
+CONSTRAINT fk_actor FOREIGN KEY (Actor_ID) REFERENCES MAIN_ACTOR(Main_Actor_ID),
+CONSTRAINT fk_company FOREIGN KEY (Company_ID) REFERENCES COMPANY(Company_ID)
+);
+
+
+INSERT  INTO COMPANY(Company_ID, Company_Name, Company_Country) VALUES(company_sq.NEXTVAL,'Imagine Entertainment','USA');
+INSERT  INTO COMPANY(Company_ID, Company_Name, Company_Country) VALUES(company_sq.NEXTVAL,'Pixar','USA');
+INSERT  INTO COMPANY(Company_ID, Company_Name, Company_Country) VALUES(company_sq.NEXTVAL,'Twentieth Fox','USA');
+INSERT  INTO COMPANY(Company_ID, Company_Name, Company_Country) VALUES(company_sq.NEXTVAL,'Bob Yari Production','USA');
+INSERT  INTO COMPANY(Company_ID, Company_Name, Company_Country) VALUES(company_sq.NEXTVAL,'Carolco Picture','USA');
+INSERT  INTO COMPANY(Company_ID, Company_Name, Company_Country) VALUES(company_sq.NEXTVAL,'Lionsgate','USA');
+INSERT  INTO COMPANY(Company_ID, Company_Name, Company_Country) VALUES(company_sq.NEXTVAL,'Warner Bros','USA');
+INSERT  INTO COMPANY(Company_ID, Company_Name, Company_Country) VALUES(company_sq.NEXTVAL,'Paramount Picture','USA');
+INSERT  INTO COMPANY(Company_ID, Company_Name, Company_Country) VALUES(company_sq.NEXTVAL,'Bedford Falls Company','USA');
+
+
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'Ivan','Reitman',TO_DATE('1946','YYYY'),'Slovakia');
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'Joseph','Mankiewicz',TO_DATE('1909','YYYY'),'USA');
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'John','Lasseter',TO_DATE('1957','YYYY'),'USA');
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'Pete','Doctor',NULL,'USA');
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'James','Cameron',TO_DATE('1954','YYYY'),'Canada');
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'Paul','Haggis',TO_DATE('1953','YYYY'),'Canada');
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'Brad','Bird',NULL,'USA');
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'Henry','Hobson',TO_DATE('1985','YYYY'),'USA');
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'Steven','RSoderbergh',TO_DATE('1963','YYYY'),'USA');
+INSERT  INTO DIRECTOR(Director_ID, Director_First_Name, Director_Last_Name,Director_BD,Country) VALUES(director_sq.NEXTVAL,'Jason','Reitman',NULL,'Canada');
+
+INSERT INTO MAIN_ACTOR(MAIN_ACTOR_ID,First_Name,Last_Name,Birthday,Country) VALUES(mainActor_sq.NEXTVAL,'Arnold','Schwarzenger', TO_DATE('1947','YYYY'),'Austria');
+INSERT INTO MAIN_ACTOR(MAIN_ACTOR_ID,First_Name,Last_Name,Birthday,Country) VALUES(mainActor_sq.NEXTVAL,'Billy','Crystal', TO_DATE('1948','YYYY'),'USA');
+INSERT INTO MAIN_ACTOR(MAIN_ACTOR_ID,First_Name,Last_Name,Birthday,Country) VALUES(mainActor_sq.NEXTVAL,' Owen','Wilson', TO_DATE('1968','YYYY'),'USA');
+INSERT INTO MAIN_ACTOR(MAIN_ACTOR_ID,First_Name,Last_Name,Birthday,Country) VALUES(mainActor_sq.NEXTVAL,'Don','Cheadle', TO_DATE('1964','YYYY'),NULL);
+INSERT INTO MAIN_ACTOR(MAIN_ACTOR_ID,First_Name,Last_Name,Birthday,Country) VALUES(mainActor_sq.NEXTVAL,'Brad','Garrett', TO_DATE('1960','YYYY'),'USA');
+INSERT INTO MAIN_ACTOR(MAIN_ACTOR_ID,First_Name,Last_Name,Birthday,Country) VALUES(mainActor_sq.NEXTVAL,'Sam','Worthington', TO_DATE('1976','YYYY'),'UK');
+INSERT INTO MAIN_ACTOR(MAIN_ACTOR_ID,First_Name,Last_Name,Birthday,Country) VALUES(mainActor_sq.NEXTVAL,'Bette','Davis', TO_DATE('1908','YYYY'),NULL);
+INSERT INTO MAIN_ACTOR(MAIN_ACTOR_ID,First_Name,Last_Name,Birthday,Country) VALUES(mainActor_sq.NEXTVAL,'George','Clooney', TO_DATE('1961','YYYY'),'USA');
+INSERT INTO MAIN_ACTOR(MAIN_ACTOR_ID,First_Name,Last_Name,Birthday,Country) VALUES(mainActor_sq.NEXTVAL,'Michael','Douglas', TO_DATE('1944','YYYY'),'USA');
+
+
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre, Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Monster,Inc', 2001,'English','Animation',2,2,5);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre, Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Kindergarten Copc', 1990,'English','Comedy',1,1,1);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Ratatouille', 2007,'English','Animation',5,2,7);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Cars', 2006,NULL,'Family',2,2,3);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'All about Eve', 1950,'English','Drama',7,3,2);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Crash', 2004,'English','Crime',4,4,6);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Terminator 2', 1991,'English','Action',1,4,5);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Ocean’s twelve', 2004,'English','Crime',8,7,9);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Avatar', 2009,'English','Action',6,3,5);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Solaris', 2002,'English','Drama',8,3,9);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Up in the air', 2009,NULL,'Drama',8,8,10);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Traffic', 2000,'English','Crime',9,9,9);
+INSERT INTO FILM(Film_ID, Title, Year,Language,Genre,Actor_ID,Company_ID,Director_ID)VALUES(film_sq.NEXTVAL,'Maggie', 2015,'English','Drama',1,6,8);
+
+
+
+/*PROJECTION*/
+--2
+SELECT Language,Genre FROM FILM;
+--3
+SELECT First_Name, Last_Name FROM MAIN_ACTOR;
+
+/*SELECTION*/
+--4
+SELECT * FROM DIRECTOR WHERE Country = 'Canada';
+--5
+SELECT * FROM FILM WHERE Genre = 'Drama';
+--6
+SELECT * FROM(SELECT * FROM (SELECT * FROM FILM WHERE FILM.Language = 'English') ORDER BY Year desc) WHERE ROWNUM <= 1;
+
+/*Jointures*/
+--7
+SELECT DIRECTOR.Director_Last_Name, FILM.Title
+FROM DIRECTOR
+INNER JOIN FILM
+ON DIRECTOR.Director_ID = FILM.Director_ID;
+
+--9
+SELECT  
+    query1.Director_Last_Name,query1.Director_ID
+    FROM
+    (
+      SELECT * FROM DIRECTOR WHERE Country = 'Canada' 
+    )query1
+     INNER JOIN
+    ( 
+        SELECT DISTINCT Director_ID FROM FILM WHERE Genre = 'Action'
+    ) query2
+ON
+    query1.Director_ID = query2.Director_ID;
+--8 
+SELECT MAIN_ACTOR.last_name
+FROM MAIN_ACTOR
+INNER JOIN 
+(SELECT Actor_ID
+FROM FILM
+GROUP BY FILM.Actor_ID, FILM.director_ID 
+HAVING count(*) > 1) query1
+ON MAIN_ACTOR.MAIN_ACTOR_ID = query1.ACTOR_ID; 
+
+--10
+
+
+DROP VIEW coolestDir;   
+        
+CREATE VIEW coolestDir AS
+SELECT query1.Director_ID, query1.Director_Last_Name, MAIN_ACTOR.Last_Name
+FROM 
+        (SELECT Director.Director_ID, Director.Director_Last_Name, query3.Actor_ID
+         FROM       
+                    (SELECT FILM.Actor_ID, query2.DIRECTOR_ID
+                    FROM
+                        (      
+                                select Director_ID 
+                                from FILM 
+                                GROUP BY Director_ID 
+                                having count(*) = (select max(count(*)) 
+                                from FILM 
+                                group by DIRECTOR_ID)
+                                    
+                       )query2
+                            
+                            RIGHT JOIN FILM        
+                            ON query2.Director_ID = FILM.Director_ID
+                    ) query3
+                  
+        RIGHT JOIN
+         director
+       
+        ON Director.Director_ID = query3.DIRECTOR_ID 
+        ) query1
+RIGHT JOIN MAIN_ACTOR
+ON MAIN_ACTOR.Main_Actor_ID = query1.Actor_ID
+where Director_ID IS NOT NULL;
+
+
+
+
+
+--COMMIT; 
+--ROLLBACK;
